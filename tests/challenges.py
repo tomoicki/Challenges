@@ -12,6 +12,13 @@ from ..challenges import (
     first_non_repeating_letter,
     find_uneven_occurrences,
     count_vowels,
+    string_middle,
+    find_substrings,
+    is_square,
+    is_triangle,
+    move_zeros,
+    bracket_validator,
+    encrypt_message,
 )
 
 
@@ -74,3 +81,87 @@ def test_find_uneven_occurrences(array, result):
 )
 def test_count_vowels(string, result):
     assert count_vowels(string) == result
+
+
+@pytest.mark.parametrize(
+    "string, result",
+    [("middle", "dd"), ("begin", "g"), ("end", "n"), ("foo bar", " "), ("", ""), ("AZ", "AZ"), ("A", "A")],
+)
+def test_string_middle(string, result):
+    assert string_middle(string) == result
+
+
+@pytest.mark.parametrize(
+    "array_a, array_b, result",
+    [
+        (["dog", "she", "shell"], ["shelly", "watchdog"], ["dog", "she", "shell"]),
+        (["xyz", "X", "Foo"], ["Arch-X"], ["X"]),
+        (["abc", "def"], ["xyz"], []),
+        (["Foo", "Bar", "Baz"], ["Foo", "Bar", "Baz"], ["Foo", "Bar", "Baz"]),
+    ],
+)
+def test_find_substrings(array_a, array_b, result):
+    assert find_substrings(array_a, array_b) == result
+
+
+@pytest.mark.parametrize(
+    "number, result",
+    [(4, True), (81, True), (16, True), (11, False), (1, True), (0, True), (100, True), (21.3, False), (99.9, False)],
+)
+def test_is_square(number, result):
+    assert is_square(number) == result
+
+
+@pytest.mark.parametrize(
+    "sides, result",
+    [((3, 5, 8.0), False), ((4, 2.1, 3), True), ((1.0, 1, 1), True), ((10, 4.7, 5), False), ((0.1, 2.2, 1.4), False)],
+)
+def test_is_triangle(sides, result):
+    assert is_triangle(sides) == result
+
+
+@pytest.mark.parametrize(
+    "array, result",
+    [
+        ([False, 1, 0, 1, 2, 0, 1, 3, "a"], [False, 1, 1, 2, 1, 3, "a", 0, 0]),
+        ([0, 0, 0, 1, 0], [1, 0, 0, 0, 0]),
+        ([0, -1, True, False, 2 + 8j, -4.9], [-1, True, False, 2 + 8j, -4.9, 0]),
+        ([0], [0]),
+        ([3.1, -9.3, 0.0, False, 1, 3, (2, 3.7)], [3.1, -9.3, 0.0, False, 1, 3, (2, 3.7)]),
+    ],
+)
+def test_move_zeros(array, result):
+    assert move_zeros(array) == result
+
+
+@pytest.mark.parametrize(
+    "string, result",
+    [
+        ("(())((()())())", True),
+        ("This is a (bracket)", True),
+        ("<(...)(>", False),
+        ("<(...)((>", False),
+        ("a)b(c)d", False),
+        ("", True),
+        (")))(((", False),
+        ("(This) (is) )a( (bracket)", False),
+        ("def function(arg1, arg2):", True),
+        ("result = function((1, 2, 3), (True):", False),
+    ],
+)
+def test_move_zeros(string, result):
+    assert bracket_validator(string) == result
+
+
+@pytest.mark.parametrize(
+    "string, result",
+    [
+        ("Foo Baz Bar", ".*****.***."),
+        ("Earth Moon Sun", ".....*.****..*"),
+        ("machine learning", ".*..***..**.***."),
+        ("data science", ".*.*..*.*.**"),
+        ("", ""),
+    ],
+)
+def test_encrypt_message(string, result):
+    assert encrypt_message(string) == result

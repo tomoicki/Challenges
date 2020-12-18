@@ -3,16 +3,17 @@ A set of challenge functions.
 
 """
 from collections import Counter
-from typing import List, Union
+from math import sqrt
+from typing import Any, List, Union, Tuple
 
 
 def array_diff(array_a: list, array_b: list) -> list:
-    """Get those elements from the first list which are not in the second one."""
+    """Get those elements from the first array which are not in the second one."""
     return list(set(array_a) - set(array_b))
 
 
 def binary_array_to_number(array: List[int]) -> int:
-    """Convert a list of bits into an integer."""
+    """Convert an array of bits into an integer."""
     return int("".join(map(str, array)), base=2)
 
 
@@ -40,3 +41,43 @@ def find_uneven_occurrences(array: List[int]) -> Union[int, None]:
 def count_vowels(string: str) -> int:
     """Count and return a number of vowels."""
     return sum([i[1] for i in Counter(string).items() if i[0] in ("a", "e", "i", "o", "u")])
+
+
+def string_middle(string: str) -> str:
+    """Get the middle part of a given string."""
+    half = len(string) // 2
+    return string[half : (half + 1)] if len(string) % 2 else string[(half - 1) : (half + 1)]
+
+
+def find_substrings(array_a: List[str], array_b: List[str]) -> List[str]:
+    """Find items in the first array which are substrings of elements of the second array."""
+    return [a for a in array_a for b in array_b if a in b]
+
+
+def is_square(number: Union[int, float]) -> bool:
+    """Check whether a number is a square."""
+    return sqrt(number).is_integer()
+
+
+def is_triangle(sides: Tuple[Union[int, float], ...]) -> bool:
+    """Check whether a triangle can be made using sides."""
+    a, b, c = sorted(sides)
+    return a + b > c
+
+
+def move_zeros(array: List[Any]) -> List[Any]:
+    """Move zeros at the end of a given array."""
+    return sorted(array, key=lambda x: True if type(x) == int and x == 0 else False)
+
+
+def bracket_validator(string: str) -> bool:
+    """Check whether for each opening bracket an expression contains a counterpart of closing bracket."""
+    string = "".join([i for i in string if i in "()"])
+    while string.find("()") != -1:
+        string = string.replace("()", "")
+    return True if string == "" else False
+
+
+def encrypt_message(string: str) -> str:
+    """For a given message replace a single occurrence of letter with dot and multiple occurrence with star."""
+    return "".join(["." if Counter(string)[i] == 1 else "*" for i in string])

@@ -102,3 +102,9 @@ def arabic_to_roman(number: int) -> str:
         roman_number += val
 
     return thousands * "M" + roman_number
+
+
+def unique_in_order(string: str) -> str:
+    """Remove duplicated consecutive signs from a given string."""
+    result = "".join([i for i, j in zip(string, string[1:] + string[0]) if i != j])
+    return result if string[0] != string[-1] else result + string[-1]

@@ -20,6 +20,7 @@ from ..challenges import (
     is_triangle,
     move_zeros,
     string_middle,
+    unique_in_order,
 )
 
 
@@ -174,3 +175,11 @@ def test_encrypt_message(string, result):
 )
 def test_arabic_to_roman(number, result):
     assert arabic_to_roman(number) == result
+
+
+@pytest.mark.parametrize(
+    "string, result",
+    [("ABBCcAD", "ABCcAD"), ("ABC", "ABC"), ("== Moon ==", "= Mon ="), ("Too  much  spaces!!!", "To much spaces!")],
+)
+def test_unique_in_order(string, result):
+    assert unique_in_order(string) == result

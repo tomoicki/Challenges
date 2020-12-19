@@ -2,7 +2,7 @@
 A set of challenge functions.
 
 """
-from collections import Counter
+from collections import Counter, OrderedDict
 from math import sqrt
 from typing import Any, List, Union, Tuple
 
@@ -81,3 +81,24 @@ def bracket_validator(string: str) -> bool:
 def encrypt_message(string: str) -> str:
     """For a given message replace a single occurrence of letter with dot and multiple occurrence with star."""
     return "".join(["." if Counter(string)[i] == 1 else "*" for i in string])
+
+
+def arabic_to_roman(number: int) -> str:
+    """Convert a number in arabic to roman format."""
+    roman_number = ""
+    arabic = [i * j for i in (1, 10, 100) for j in range(1, 10)] + [1000]
+    roman = "I II III IV V VI VII VIII IX X XX XXX XL L LX LXX LXXX XC C CC CCC CD D DC DCC DCCC CM M"
+    arabic_roman = OrderedDict({a: r for a, r in zip(arabic, roman.split(" "))})
+    thousands, number = divmod(number, 1000)
+
+    while number:
+        temp = list()
+        for key, val in arabic_roman.items():
+            quotient, remainder = divmod(number, key)
+            if quotient == 1:
+                temp.append((remainder, val))
+
+        number, val = sorted(temp, key=lambda el: el[0])[0]
+        roman_number += val
+
+    return thousands * "M" + roman_number

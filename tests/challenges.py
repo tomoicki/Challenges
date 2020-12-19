@@ -6,19 +6,20 @@ Unit tests for challenge functions.
 import pytest
 
 from ..challenges import (
+    arabic_to_roman,
     array_diff,
     binary_array_to_number,
-    is_array_squared,
-    first_non_repeating_letter,
-    find_uneven_occurrences,
+    bracket_validator,
     count_vowels,
-    string_middle,
+    encrypt_message,
     find_substrings,
+    find_uneven_occurrences,
+    first_non_repeating_letter,
+    is_array_squared,
     is_square,
     is_triangle,
     move_zeros,
-    bracket_validator,
-    encrypt_message,
+    string_middle,
 )
 
 
@@ -149,7 +150,7 @@ def test_move_zeros(array, result):
         ("result = function((1, 2, 3), (True):", False),
     ],
 )
-def test_move_zeros(string, result):
+def test_bracket_validator(string, result):
     assert bracket_validator(string) == result
 
 
@@ -165,3 +166,11 @@ def test_move_zeros(string, result):
 )
 def test_encrypt_message(string, result):
     assert encrypt_message(string) == result
+
+
+@pytest.mark.parametrize(
+    "number, result",
+    [(1999, "MCMXCIX"), (2000, "MM"), (79, "LXXIX"), (83, "LXXXIII"), (949, "CMXLIX"), (3967, "MMMCMLXVII")],
+)
+def test_arabic_to_roman(number, result):
+    assert arabic_to_roman(number) == result

@@ -31,7 +31,8 @@ class User:
             self.progress = self.progress % 100
             if rank_after * rank_before <= 0:
                 self.rank += 1
-        if self.rank > 8: self.rank = 8
+        if self.rank > 8:
+            self.rank = 8
         if self.rank == 8:
             self.progress = 0
         print("Object stats after: ", self.rank, self.progress)
